@@ -1,0 +1,18 @@
+@import 'src/client/styles/variables.scss';
+
+header {
+    color: black;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 40px;
+    background: $primary-color;
+}
+
+.logo{
+    color: black;
+}
+
+.motivation{
+
+    color: black;
+}
