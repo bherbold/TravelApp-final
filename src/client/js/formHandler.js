@@ -336,7 +336,7 @@ const WeatherONEupdateUI = async() => {
           }
     }
 
-    /* Function to GET Web API Data IMG*/
+/* Function to GET Web API Data Geonames*/
 const getWiki = async (baseURL,lat, lng)=>{
 
   const res = await fetch(baseURL + 'lat=' + lat + '&lng=' + lng + '&username=b1234');
@@ -354,7 +354,7 @@ const getWiki = async (baseURL,lat, lng)=>{
   }
 }
 
-//function to update the UI with the current Weather report
+//function to update the UI with a wikipedia article about the city
 const WikiUpdateUI = async() => {
   const request = await fetch('http://localhost:8081/wikiData');
   try{
