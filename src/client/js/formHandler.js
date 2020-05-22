@@ -9,6 +9,8 @@ const WeatherBaseURL = 'https://api.weatherbit.io/v2.0/forecast/daily?city='
 const ImgKey = '16651159-a57b869c8ec119da485898484' 
 const ImgBaseURL = 'https://pixabay.com/api/?key=16651159-a57b869c8ec119da485898484&q='
 
+const wikiBaseURL = 'http://api.geonames.org/findNearbyWikipediaJSON?'
+
 // Event listener to add function to existing HTML DOM element
 
 /* Function called by event listener */
@@ -100,6 +102,24 @@ function action(event){
         )
     
     },1000);
+
+    setTimeout(()=>{
+
+      getWiki(wikiBaseURL,lat,lon)
+    
+      .then(function(data){
+  
+          console.log('post Wiki - client to server');
+          postEntry('http://localhost:8081/addWiki', data);
+      })
+  
+      .then(
+          WikiUpdateUI
+      )
+  
+  },1000);
+    
+
 }
 
 /* Function to GET Web API Data Weather*/
@@ -315,5 +335,45 @@ const WeatherONEupdateUI = async() => {
             console.log("error", error);
           }
     }
+
+    /* Function to GET Web API Data IMG*/
+const getWiki = async (baseURL,lat, lng)=>{
+
+  const res = await fetch(baseURL + 'lat=' + lat + '&lng=' + lng + '&username=b1234');
+
+  try {
+    const data = await res.json();
+    console.log(data)
+    const newData = { wiki: data }
+    
+    return newData;
+
+  }  catch(error) {
+    console.log("error", error);
+    // appropriately handle the error
+  }
+}
+
+//function to update the UI with the current Weather report
+const WikiUpdateUI = async() => {
+  const request = await fetch('http://localhost:8081/wikiData');
+  try{
+      
+      const allData = await request.json();
+      console.log('UPDATING UI WIKI')
+      console.log(allData.wiki);
+      let fraction = document.createDocumentFragment('div');
+
+      //document.getElementById('weather').innerHTML
+      const newEl = document.createElement('div')
+      newEl.innerHTML = `<div id="newWiki" >${allData.wiki.geonames[0].summary}</div> `
+      newEl.classList.add("WikiOUTER")
+      fraction.appendChild(newEl);
+      document.getElementById('wiki').innerHTML = "";
+      document.getElementById('wiki').appendChild(fraction);
+  }catch(error){
+      console.log("error", error);
+    }
+}
 
 export { action }

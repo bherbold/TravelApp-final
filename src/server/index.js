@@ -47,6 +47,8 @@ var weatherData={};
 var ImgURL = {};
 //stores Time Data
 var timeData = {};
+//stores Wiki Data
+var wikiData = {};
 
 app.post('/api', async (req, res) => {
   const { formText } = req.body;
@@ -72,7 +74,7 @@ app.post('/addWeather',(req,res) =>{
   console.log(req.body);
   weatherData = req.body;
   console.log('WEATHER POST');
-  res.end('Hallo')
+  res.end('END')
 });
 
 //GET ROUTE WEATHER
@@ -94,7 +96,7 @@ app.post('/addImg',(req,res) =>{
   console.log(req.body);
   ImgURL = req.body;
   console.log('IMG POST WEATHER');
-  res.end('Hallo')
+  res.end('END')
 });
 
 //POST Time
@@ -103,13 +105,29 @@ app.post('/addTime',(req,res) =>{
   console.log(req.body);
   timeData = req.body;
   console.log('TIME POST');
-  res.end('Hallo')
+  res.end('END')
 });
 
 //GET ROUTE WEATHER
 app.get('/TimeData', (req,res)=>{
   res.send(timeData)
   console.log('GET REQUEST TIME')
+
+});
+
+//POST Time
+app.post('/addWiki',(req,res) =>{
+  console.log("Wiki reached server")
+  console.log(req.body);
+  wikiData = req.body;
+  console.log('WIKI POST');
+  res.end('END')
+});
+
+//GET ROUTE WEATHER
+app.get('/wikiData', (req,res)=>{
+  res.send(wikiData)
+  console.log('GET REQUEST WIKI')
 
 });
 
